@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Watch customers, an Order Taker, a Cook and a Server run a take-away restaurant, simulated with JavaScript Promises." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>Fast Food Simulator</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <h1><span aria-hidden="true">🍔</span> Fast Food Simulator</h1>
+        <p class="subtitle">
+          Customers arrive, order, wait and eat, while an Order Taker, a Cook and a Server keep up (or don't).
+          Built with native JavaScript Promises.
+        </p>
+      </header>
+
+      <form id="settings" class="panel settings" novalidate>
+        <h2>Settings <span class="muted">(seconds)</span></h2>
+        <div id="fields" class="fields"></div>
+        <div class="controls">
+          <label class="speed">
+            Speed
+            <select id="speed">
+              <option value="1">1× real time</option>
+              <option value="2">2×</option>
+              <option value="5">5×</option>
+              <option value="10">10×</option>
+            </select>
+          </label>
+          <div class="buttons">
+            <button type="button" id="stop" class="btn btn-secondary" disabled>Stop</button>
+            <button type="submit" id="start" class="btn btn-primary">Start</button>
+          </div>
+        </div>
+        <div id="warnings" class="warnings" role="status"></div>
+      </form>
+
+      <section class="panel status" aria-label="Simulation status">
+        <div class="status-main">
+          <span id="state" class="pill idle">Ready</span>
+          <span class="clock" aria-label="Simulated time"><span id="elapsed">00:00</span><span id="remaining" class="muted"></span></span>
+        </div>
+        <dl class="stats">
+          <div><dt>Arrived</dt><dd id="stat-arrived">0</dd></div>
+          <div><dt>Served</dt><dd id="stat-served">0</dd></div>
+          <div><dt>Avg. wait</dt><dd id="stat-wait">–</dd></div>
+          <div><dt>Longest order line</dt><dd id="stat-longest">0</dd></div>
+        </dl>
+      </section>
+
+      <section class="floor" aria-label="Restaurant floor">
+        <article class="area">
+          <h3>1 · Order line</h3>
+          <label class="readout">Customers waiting to order <input id="line-count" readonly value="0" /></label>
+          <div class="stage" id="stage-line" aria-hidden="true"></div>
+        </article>
+
+        <article class="area">
+          <h3>2 · Order counter</h3>
+          <label class="readout">Order number being taken <input id="taking-number" readonly value="—" /></label>
+          <div class="stage staff-stage" aria-hidden="true">
+            <span class="staff" title="Order Taker">🧑‍💼</span>
+            <div class="stage-inline" id="stage-counter"></div>
+          </div>
+        </article>
+
+        <article class="area">
+          <h3>3 · Kitchen</h3>
+          <label class="readout">Order being prepared <input id="preparing-number" readonly value="—" /></label>
+          <label class="readout">Waiting orders, in sequence <textarea id="kitchen-list" readonly rows="2">—</textarea></label>
+          <label class="readout">Number of waiting orders <input id="kitchen-count" readonly value="0" /></label>
+          <div class="stage staff-stage" aria-hidden="true">
+            <span class="staff" title="Cook">🧑‍🍳</span>
+            <div class="stage-inline stove" id="stage-stove"></div>
+            <div class="stage-inline" id="stage-kitchen"></div>
+          </div>
+        </article>
+
+        <article class="area">
+          <h3>4 · Pickup counter</h3>
+          <label class="readout">Order available for pickup <input id="pickup-number" readonly value="—" /></label>
+          <label class="readout">Customers in the serving line <input id="serving-count" readonly value="0" /></label>
+          <div class="stage staff-stage" aria-hidden="true">
+            <span class="staff" title="Server">🧑‍🔧</span>
+            <div class="stage-inline counter-top" id="stage-pickup"></div>
+          </div>
+          <div class="stage" id="stage-serving" aria-hidden="true"></div>
+        </article>
+      </section>
+
+      <section class="panel dining" aria-label="Dining area">
+        <h3>🍽️ Dining area <span class="muted" id="dining-note">(most recent guests)</span></h3>
+        <div class="stage" id="stage-dining" aria-hidden="true"></div>
+      </section>
+
+      <section class="panel log-panel" aria-label="Event log">
+        <h3>Event log</h3>
+        <ol id="log" class="log" aria-live="off"></ol>
+      </section>
+
+      <footer class="footer muted">
+        Project idea: <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/3-Advanced/FastFood-App.md" target="_blank" rel="noreferrer">app-ideas · Fast Food Simulator</a>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
